@@ -53,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(View childView, int position) {
             LogUtil.D("位置 %d 被点击了~",position);
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this,((WidgetApplication)getApplication()).getActivityClass(adapter.getItem(position)));
-            startActivity(intent);
+            Class clazz = ((WidgetApplication)getApplication()).getActivityClass(adapter.getItem(position));
+            if (clazz!=null) {
+                Intent intent = new Intent(MainActivity.this,clazz);
+                startActivity(intent);
+            }
         }
     }
 

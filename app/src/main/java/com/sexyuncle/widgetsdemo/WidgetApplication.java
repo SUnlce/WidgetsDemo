@@ -3,6 +3,7 @@ package com.sexyuncle.widgetsdemo;
 import android.app.Application;
 
 import com.sexyuncle.viewanimation.ViewAnimatorActivity;
+import com.sexyuncle.viewanimation.ViewFlipperActivity;
 
 import java.util.HashMap;
 
@@ -22,6 +23,7 @@ public class WidgetApplication extends Application{
 
     void initActivitys(){
         activityMap.put("ViewAnimator", ViewAnimatorActivity.class);
+        activityMap.put("ViewFlipper",ViewFlipperActivity.class);
     }
     public static WidgetApplication getInstance() {
         return mInstance;

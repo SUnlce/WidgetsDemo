@@ -22,6 +22,10 @@
         <activity
             android:name="com.sexyuncle.viewanimation.ViewAnimatorActivity"
             android:label="@string/title_activity_view_animation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.sexyuncle.viewanimation.ViewFlipperActivity"
+            android:label="@string/title_activity_view_flipper"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
