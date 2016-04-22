@@ -1,5 +1,10 @@
 package com.sexyuncle.viewanimation;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,8 +13,11 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
+import android.widget.ViewFlipper;
 
 import com.sexyuncle.widgetsdemo.LogUtil;
 import com.sexyuncle.widgetsdemo.R;
@@ -20,13 +28,13 @@ import butterknife.InjectView;
 public class ViewAnimatorActivity extends AppCompatActivity {
 
 
-    @InjectView(R.id.number)
-    TextView number;
     private int mTouchSlop;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.viewAnimator)
     ViewAnimator viewAnimator;
+    @InjectView(R.id.number)
+    SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,38 @@ public class ViewAnimatorActivity extends AppCompatActivity {
             imageView.setImageResource(id);
             viewAnimator.addView(imageView, i - 1, new ViewAnimator.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
+        seekBar.setMax(viewAnimator.getChildCount());
+        seekBar.setOnSeekBarChangeListener(new MySeekbarListener());
         changeDisplayNumber();
+    }
+
+    private class MySeekbarListener implements SeekBar.OnSeekBarChangeListener{
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            int id = (progress == 0) ? R.drawable.p1 : (progress == 1) ? R.drawable.p2 : (progress == 2) ? R.drawable.p3 : R.drawable.p4;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(getApplication().getResources(),id,options);
+            int w_scale = 20/options.outWidth;
+            int h_scale = 20/options.outHeight;
+            options.inSampleSize = ((w_scale<h_scale)?w_scale:h_scale);
+            options.inJustDecodeBounds = false;
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(),id,options);
+            Drawable drawable = new BitmapDrawable(bitmap);
+            seekBar.setThumb(drawable);
+            viewAnimator.setDisplayedChild(progress);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
     }
 
     @Override
@@ -66,9 +105,9 @@ public class ViewAnimatorActivity extends AppCompatActivity {
             case MotionEvent.ACTION_DOWN:
                 oldX = (int) event.getX();
                 break;
+
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                LogUtil.D("move x is %s , speed is %s", event.getX() - oldX, mTouchSlop * 2);
                 if (event.getX() - oldX < -2 * mTouchSlop) {
                     viewAnimator.showNext();
                     changeDisplayNumber();
@@ -87,6 +126,6 @@ public class ViewAnimatorActivity extends AppCompatActivity {
      * @description 改变指示选项
      */
     void changeDisplayNumber(){
-     number.setText("正在显示"+(viewAnimator.getDisplayedChild()+1)+"张图片");
+        seekBar.setProgress(viewAnimator.getDisplayedChild());
     }
 }

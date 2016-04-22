@@ -18,10 +18,10 @@
         android:inAnimation="@android:anim/fade_in"
         android:outAnimation="@android:anim/fade_out"
         android:animateFirstView="true"/>
-    <TextView
+
+    <android.support.v7.widget.AppCompatSeekBar
         android:layout_alignParentBottom="true"
         android:id="@id/number"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 </RelativeLayout>
