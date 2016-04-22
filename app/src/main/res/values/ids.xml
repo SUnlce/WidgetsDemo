@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="recyclerView" type="id" />
+    <item name="toolbar" type="id" />
+    <item name="collapsingToolbarLayout" type="id" />
+    <item name="viewAnimator" type="id" />
+    <item name="number" type="id" />
+    <item name="item_text" type="id" />
+</resources>
