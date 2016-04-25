@@ -1,10 +1,15 @@
 package com.sexyuncle.viewanimation;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -35,6 +41,7 @@ public class ViewAnimatorActivity extends AppCompatActivity {
     ViewAnimator viewAnimator;
     @InjectView(R.id.number)
     SeekBar seekBar;
+    private int width;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +57,8 @@ public class ViewAnimatorActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         for (int i = 1; i <= 4; i++) {
             ImageView imageView = new ImageView(getApplicationContext());
-            int id = (i == 1) ? R.drawable.p1 : (i == 2) ? R.drawable.p2 : (i == 3) ? R.drawable.p3 : R.drawable.p4;
-            imageView.setImageResource(id);
+                int id = (i == 1) ? R.drawable.p1 : (i == 2) ? R.drawable.p2 : (i == 3) ? R.drawable.p3 : R.drawable.p4;
+                imageView.setImageResource(id);
             viewAnimator.addView(imageView, i - 1, new ViewAnimator.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
         seekBar.setMax(viewAnimator.getChildCount());
@@ -63,18 +70,10 @@ public class ViewAnimatorActivity extends AppCompatActivity {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            int id = (progress == 0) ? R.drawable.p1 : (progress == 1) ? R.drawable.p2 : (progress == 2) ? R.drawable.p3 : R.drawable.p4;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(getApplication().getResources(),id,options);
-            int w_scale = 20/options.outWidth;
-            int h_scale = 20/options.outHeight;
-            options.inSampleSize = ((w_scale<h_scale)?w_scale:h_scale);
-            options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(),id,options);
-            Drawable drawable = new BitmapDrawable(bitmap);
-            seekBar.setThumb(drawable);
-            viewAnimator.setDisplayedChild(progress);
+
+            if (fromUser) {
+                viewAnimator.setDisplayedChild(progress);
+            }
         }
 
         @Override

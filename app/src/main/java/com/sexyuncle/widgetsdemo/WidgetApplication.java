@@ -2,6 +2,7 @@ package com.sexyuncle.widgetsdemo;
 
 import android.app.Application;
 
+import com.sexyuncle.viewanimation.CycleSlipActivity;
 import com.sexyuncle.viewanimation.ViewAnimatorActivity;
 import com.sexyuncle.viewanimation.ViewFlipperActivity;
 
@@ -24,6 +25,7 @@ public class WidgetApplication extends Application{
     void initActivitys(){
         activityMap.put("ViewAnimator", ViewAnimatorActivity.class);
         activityMap.put("ViewFlipper",ViewFlipperActivity.class);
+        activityMap.put("CycleSlipView", CycleSlipActivity.class);
     }
     public static WidgetApplication getInstance() {
         return mInstance;
