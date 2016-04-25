@@ -1,12 +1,12 @@
 ~.~.~.~.~.~..~.~.~.~.~..~.~.~.~.~..~.~.~.~.~..~.~.~.~.~.
 
-示例各种空间的使用方法:
+**_示例各种空间的使用方法_**:
 
-1.ViewAnimator
-2.ViewFlipper
-3.ViewSwitcher
-4.ImageSwitcher
-5.自定义循环滚动空间CycleSlipView
+1.**ViewAnimator**
+2.**ViewFlipper**
+3.**ViewSwitcher**
+4.**ImageSwitcher**
+5.自定义循环滚动空间**CycleSlipView**
 
 
 ~.~.~.~.~.~..~.~.~.~.~..~.~.~.~.~..~.~.~.~.~..~.~.~.~.~.
